@@ -1,3 +1,5 @@
+import Checklist from "./components/Checklist"; // Importação do componente que você criou
+
 export default function Home() {
   return (
     <>
@@ -8,9 +10,7 @@ export default function Home() {
             Minicurso EaD — Docência Digital na Era da IA
           </p>
           <h1 className="font-serif text-[2.4rem] md:text-5xl leading-tight tracking-tight">
-            Análise crítica de{" "}
-            <span className="bg-flag-soft px-1">vieses</span> em conteúdos
-            educacionais gerados por IA
+            Análise crítica de vieses em conteúdos educacionais gerados por IA
           </h1>
           <p className="mt-6 text-lg text-ink-soft max-w-[56ch]">
             Um minicurso prático para reconhecer estereótipos, omissões e
@@ -32,7 +32,7 @@ export default function Home() {
             Para quem é e o que você vai precisar
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-paper-2 p-6">
+            <div className="bg-paper-2 p-6 rounded-md">
               <h3 className="font-semibold text-base mb-2">Público-alvo</h3>
               <p className="text-ink-soft text-[0.98rem]">
                 Educadores, professores e criadores de conteúdo EaD que já
@@ -40,7 +40,7 @@ export default function Home() {
                 similares) na produção de materiais didáticos.
               </p>
             </div>
-            <div className="bg-paper-2 p-6">
+            <div className="bg-paper-2 p-6 rounded-md">
               <h3 className="font-semibold text-base mb-2">
                 Conhecimentos prévios
               </h3>
@@ -64,13 +64,18 @@ export default function Home() {
               "Comparar respostas de diferentes IAs para um mesmo prompt educacional e apontar diferenças de viés entre elas.",
               "Aplicar critérios explícitos — uma checklist de revisão — antes de levar um material para a sala de aula.",
               "Reconhecer os limites da própria análise: o que uma checklist não é capaz de capturar.",
-            ].map((item) => (
-              <li key={item} className="flex gap-3.5 items-start">
-                <span className="mt-2 w-2 h-2 rounded-full bg-ok flex-none" />
-                <span>{item}</span>
+            ].map((item, index) => (
+              <li key={index} className="flex gap-3.5 items-start">
+                {/* Aqui os pontinhos da lista foram atualizados para combinar com o design */}
+                <div className="mt-1.5 w-2.5 h-2.5 rounded-sm bg-flag flex-none opacity-80" />
+                <span className="text-ink text-[1.05rem] leading-relaxed">{item}</span>
               </li>
             ))}
           </ul>
+          
+          {/* COMPONENTE ADICIONADO AQUI: Ele vai renderizar logo abaixo da lista */}
+          <Checklist />
+          
         </div>
       </section>
 
@@ -78,7 +83,8 @@ export default function Home() {
       <section className="border-b border-rule">
         <div className="max-w-3xl mx-auto px-7 py-13">
           <h2 className="font-serif text-2xl mb-6">Assista ao minicurso</h2>
-          <div className="relative w-full pt-[56.25%] bg-ink">
+          {/* Aqui adicionamos rounded-md, overflow-hidden e shadow-lg para emoldurar melhor o vídeo */}
+          <div className="relative w-full pt-[56.25%] bg-ink rounded-md overflow-hidden shadow-lg border border-rule">
             {/* Substitua SEU_ID_DO_YOUTUBE pelo ID do vídeo publicado */}
             <iframe
               className="absolute inset-0 w-full h-full"
@@ -98,7 +104,7 @@ export default function Home() {
       <section className="border-b border-rule">
         <div className="max-w-3xl mx-auto px-7 py-13">
           <h2 className="font-serif text-2xl mb-6">Avaliação interativa</h2>
-          <div className="bg-paper-2 p-7 flex flex-wrap justify-between items-center gap-5">
+          <div className="bg-paper-2 rounded-md p-7 flex flex-wrap justify-between items-center gap-5 border border-rule">
             <div>
               <h3 className="font-semibold text-base">
                 Teste o que você aprendeu
@@ -109,11 +115,12 @@ export default function Home() {
               </p>
             </div>
             {/* Substitua # pelo link da atividade no Genially */}
+            {/* Botão com transições suaves e efeito de flutuar */}
             <a
               href="#"
               target="_blank"
               rel="noopener"
-              className="inline-block bg-ink hover:bg-flag text-paper px-6 py-3.5 text-[0.95rem] font-medium whitespace-nowrap transition-colors"
+              className="inline-block bg-ink hover:bg-flag text-paper px-6 py-3.5 text-[0.95rem] font-medium whitespace-nowrap transition-all duration-300 rounded-sm shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               Abrir avaliação →
             </a>

@@ -1,4 +1,5 @@
 import Checklist from "./components/Checklist"; // Importação do componente que você criou
+import TesteVoceMesmo from "./components/TesteVoceMesmo";
 
 export default function Home() {
   return (
@@ -97,6 +98,18 @@ export default function Home() {
           <p className="mt-3.5 text-sm text-ink-soft italic">
             Vídeo hospedado no YouTube · legendas revisadas disponíveis.
           </p>
+        </div>
+      </section>
+
+      {/* TESTE VOCÊ MESMO */}
+      <section className="border-b border-rule">
+        <div className="max-w-3xl mx-auto px-7 py-14">
+          <h2 className="font-serif text-2xl mb-3">Teste você mesmo</h2>
+          <p className="text-ink-soft mb-6 max-w-[56ch]">
+            Copie um prompt, cole em duas ou mais IAs e compare as respostas usando
+            a checklist de revisão.
+          </p>
+          <TesteVoceMesmo />
         </div>
       </section>
 

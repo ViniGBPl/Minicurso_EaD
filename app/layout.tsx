@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Newsreader, IBM_Plex_Sans } from "next/font/google";
+import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 
-const newsreader = Newsreader({
+// Mantive o nome da variável --font-serif para os componentes continuarem
+// funcionando; ela agora aponta para a fonte dos títulos (Space Grotesk).
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-newsreader",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-serif",
 });
 
-const plex = IBM_Plex_Sans({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-plex",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -27,8 +28,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${newsreader.variable} ${plex.variable}`}>
-      <body className="bg-paper text-ink font-sans">{children}</body>
+    <html
+      lang="pt-BR"
+      className={`${spaceGrotesk.variable} ${inter.variable}`}
+    >
+      <body className="bg-paper text-ink font-sans antialiased">
+        {children}
+      </body>
     </html>
   );
 }

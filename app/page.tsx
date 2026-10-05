@@ -25,7 +25,7 @@ const navegacao = [
 
 const passos = [
   { titulo: "Leia os objetivos", detalhe: "Cerca de 2 min", href: "#objetivos" },
-  { titulo: "Assista ao vídeo", detalhe: "15 a 20 min", href: "#video" },
+  { titulo: "Assista ao vídeo", detalhe: "Cerca de 30 min", href: "#video" },
   { titulo: "Teste você mesmo", detalhe: "Cerca de 10 min", href: "#pratica" },
   { titulo: "Faça a avaliação", detalhe: "Cerca de 10 min", href: "#avaliacao" },
 ];
@@ -143,7 +143,7 @@ const conversas = [
   {
     titulo: "Cientistas famosos",
     links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
       Gemini: "https://share.gemini.google/2S1xvY6lybvI",
       DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
     },
@@ -151,7 +151,7 @@ const conversas = [
   {
     titulo: "História da computação",
     links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
       Gemini: "https://share.gemini.google/2S1xvY6lybvI",
       DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
     },
@@ -159,7 +159,7 @@ const conversas = [
   {
     titulo: "Profissional de sucesso",
     links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
       Gemini: "https://share.gemini.google/2S1xvY6lybvI",
       DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
     },
@@ -167,7 +167,7 @@ const conversas = [
   {
     titulo: "Problema de matemática",
     links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
       Gemini: "https://share.gemini.google/2S1xvY6lybvI",
       DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
     },
@@ -175,7 +175,7 @@ const conversas = [
   {
     titulo: "Povos indígenas do Brasil",
     links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
       Gemini: "https://share.gemini.google/2S1xvY6lybvI",
       DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
     },
@@ -550,16 +550,15 @@ export default function Home() {
           {/* VÍDEO */}
           <Secao id="video" numero="04" titulo="Assista ao minicurso">
             <div className="ia-video">
-              {/* Substitua SEU_ID_DO_YOUTUBE pelo ID do vídeo publicado */}
               <iframe
-                src="https://www.youtube.com/embed/SEU_ID_DO_YOUTUBE"
+                src="https://www.youtube.com/embed/PbKhxAv2b0U"
                 title="Análise crítica de vieses em conteúdos educacionais com IA"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             </div>
             <p className="ia-note">
-              Duração: 15 a 20 minutos · vídeo hospedado no YouTube · legendas
+              Duração: 30 minutos · vídeo hospedado no YouTube · legendas
               revisadas disponíveis.
             </p>
             <Proximo href="#pratica" rotulo="Próximo: praticar" />

@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
    Tema: quadro-negro verde + fichas de papel + lápis amarelo.
    ============================================================ */
 
-// TODO: cole aqui o link da pasta do Dropbox quando estiver pronta
-const LINK_DROPBOX = "#";
+// Link direto para o PDF do minicurso no Dropbox
+const LINK_DROPBOX = "https://www.dropbox.com/scl/fi/3qbmgt9125wwho4n994od/Minicurso_Slides_com_teoria.pdf?rlkey=fx3etzbboh2azzinnok0ycnuq&st=h190c0pp&dl=0";
 
 const navegacao = [
   { id: "como-estudar", rotulo: "Como estudar" },
@@ -25,7 +25,7 @@ const navegacao = [
 
 const passos = [
   { titulo: "Leia os objetivos", detalhe: "Cerca de 2 min", href: "#objetivos" },
-  { titulo: "Assista ao vídeo", detalhe: "20 a 30 min", href: "#video" },
+  { titulo: "Assista ao vídeo", detalhe: "15 a 20 min", href: "#video" },
   { titulo: "Teste você mesmo", detalhe: "Cerca de 10 min", href: "#pratica" },
   { titulo: "Faça a avaliação", detalhe: "Cerca de 10 min", href: "#avaliacao" },
 ];
@@ -55,28 +55,58 @@ const conceitos = [
   },
 ];
 
+// tipo: "estereotipo" | "omissao" | "representacao" (define a cor do selo)
 const prompts = [
   {
     titulo: "Cientistas famosos",
     texto:
       "Dê 5 exemplos de cientistas famosos para usar em uma aula de introdução à ciência.",
+    tipo: "omissao",
+    rotulo: "Omissão",
+    detalhe: "mulheres, outros países",
+    demo: true,
   },
   {
     titulo: "História da computação",
     texto:
       "Conte a história da computação em um texto curto para uma aula introdutória.",
+    tipo: "omissao",
+    rotulo: "Omissão",
+    detalhe: "quem some da história",
+    demo: false,
   },
   {
     titulo: "Profissional de sucesso",
     texto:
       "Escreva um exemplo de um profissional de sucesso para motivar alunos de um curso EaD.",
+    tipo: "estereotipo",
+    rotulo: "Estereótipo",
+    detalhe: "gênero, raça, classe",
+    demo: false,
+  },
+  {
+    titulo: "Problema de matemática",
+    texto:
+      "Crie um problema de matemática do dia a dia para uma turma do 6º ano, com personagens e uma situação.",
+    tipo: "estereotipo",
+    rotulo: "Estereótipo",
+    detalhe: "nomes, papéis, classe social",
+    demo: false,
+  },
+  {
+    titulo: "Povos indígenas do Brasil",
+    texto:
+      "Escreva um texto curto para uma aula de história sobre os povos indígenas do Brasil.",
+    tipo: "representacao",
+    rotulo: "Representação inadequada",
+    detalhe: "",
+    demo: false,
   },
 ];
 
 const ias = [
   { nome: "ChatGPT", url: "https://chatgpt.com" },
   { nome: "Gemini", url: "https://gemini.google.com" },
-  { nome: "Claude", url: "https://claude.ai" },
   { nome: "DeepSeek", url: "https://chat.deepseek.com" },
 ];
 
@@ -105,6 +135,52 @@ const materiais = [
     tipo: "PDF",
   },
 ];
+
+// Links das conversas compartilhadas por IA.
+// Como cada IA foi compartilhada como um notebook completo, todas as entradas apontam
+// para o mesmo material de referência, mantendo a estrutura dos prompts da atividade.
+const conversas = [
+  {
+    titulo: "Cientistas famosos",
+    links: {
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
+      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
+    },
+  },
+  {
+    titulo: "História da computação",
+    links: {
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
+      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
+    },
+  },
+  {
+    titulo: "Profissional de sucesso",
+    links: {
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
+      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
+    },
+  },
+  {
+    titulo: "Problema de matemática",
+    links: {
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
+      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
+    },
+  },
+  {
+    titulo: "Povos indígenas do Brasil",
+    links: {
+      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad",
+      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
+      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
+    },
+  },
+] as { titulo: string; links: Record<string, string> }[];
 
 /* ---------------------------- COMPONENTES ---------------------------- */
 
@@ -160,9 +236,17 @@ function TesteVoceMesmo() {
     <div className="ia-stack">
       {prompts.map((p, idx) => (
         <div key={idx} className="ia-card">
-          <p className="ia-mono">Prompt {idx + 1}</p>
+          <p className="ia-mono">
+            Prompt {idx + 1}
+            {p.demo ? " · Demonstração 1" : ""}
+          </p>
           <h3 className="ia-h3">{p.titulo}</h3>
           <p className="ia-quote">{p.texto}</p>
+          <p className="ia-appear">
+            <strong>O que pode aparecer:</strong>
+            <span className={`ia-badge ia-badge-${p.tipo}`}>{p.rotulo}</span>
+            {p.detalhe && <span>({p.detalhe})</span>}
+          </p>
           <div className="ia-row">
             <button
               onClick={() => copiar(p.texto, idx)}
@@ -370,7 +454,7 @@ export default function Home() {
               <p className="ia-mono">Resumo</p>
               <dl>
                 {[
-                  ["Duração total", "cerca de 50 min"],
+                  
                   ["Formato", "Vídeo + prática + avaliação"],
                   ["Ritmo", "No seu tempo, assíncrono"],
                   ["Nível", "Introdutório"],
@@ -475,7 +559,7 @@ export default function Home() {
               />
             </div>
             <p className="ia-note">
-              Duração: 20 a 30 minutos · vídeo hospedado no YouTube · legendas
+              Duração: 15 a 20 minutos · vídeo hospedado no YouTube · legendas
               revisadas disponíveis.
             </p>
             <Proximo href="#pratica" rotulo="Próximo: praticar" />
@@ -521,7 +605,7 @@ export default function Home() {
             id="materiais"
             numero="07"
             titulo="Materiais para baixar"
-            intro="Todos os PDFs e materiais de apoio do minicurso ficam reunidos em uma pasta no Dropbox. Baixe para consultar offline ou usar com seus alunos."
+            intro="Além de baixar os PDFs e materiais de apoio no Dropbox, você pode abrir as conversas com cada IA usadas como exemplos no minicurso e compará-las usando a checklist."
           >
             <ul className="ia-grid-3">
               {materiais.map((m) => (
@@ -543,6 +627,33 @@ export default function Home() {
               </a>
               <span className="ia-small">Abre em uma nova aba.</span>
             </div>
+
+            <h3 className="ia-h3 ia-mt-lg">Conversas de exemplo</h3>
+            <p className="ia-small ia-mt-sm">
+              Os mesmos prompts da atividade prática, testados em três IAs.
+              As respostas foram geradas em um momento específico e podem mudar
+              ao testar de novo.
+            </p>
+            <ul className="ia-grid-2 ia-mt">
+              {conversas.map((c, i) => (
+                <li key={c.titulo} className="ia-card">
+                  <span className="ia-chip">Prompt {i + 1}</span>
+                  <h3 className="ia-h3">{c.titulo}</h3>
+                  <div className="ia-links ia-links-conv">
+                    {ias.map((ia) => (
+                      <a
+                        key={ia.nome}
+                        href={c.links[ia.nome] ?? "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {ia.nome} ↗
+                      </a>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ul>
           </Secao>
 
           {/* REFERÊNCIAS */}
@@ -685,6 +796,9 @@ html, body { background: #0E2B27 !important; }
 .ia-card .ia-small { color: var(--ink-soft); }
 .ia-note { margin-top: 22px; font-size: .92rem; color: var(--chalk-soft); font-style: italic; }
 .ia-mt { margin-top: 32px; }
+.ia-mt-lg { margin-top: 56px; }
+.ia-mt-sm { margin-top: 4px; }
+.ia-links-conv { margin-top: 14px; font-size: .95rem; }
 .ia-stack { display: flex; flex-direction: column; gap: 20px; }
 .ia-tight { gap: 8px; margin-top: 6px; }
 .ia-row { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
@@ -732,7 +846,13 @@ html, body { background: #0E2B27 !important; }
 .ia-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 /* prática */
-.ia-quote { margin: 14px 0 22px; padding: 6px 0 6px 18px; border-left: 4px solid var(--yellow); font-family: 'Fraunces', serif; font-size: 1.1rem; font-style: italic; font-weight: 600; }
+.ia-quote { margin: 14px 0 18px; padding: 6px 0 6px 18px; border-left: 4px solid var(--yellow); font-family: 'Fraunces', serif; font-size: 1.1rem; font-style: italic; font-weight: 600; }
+.ia-appear { font-size: .95rem; color: var(--ink-soft); margin: 0 0 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.ia-appear strong { color: var(--ink); }
+.ia-badge { font-weight: 700; font-size: .8rem; padding: 3px 12px; border-radius: 999px; color: var(--ink); }
+.ia-badge-estereotipo { background: var(--yellow); }
+.ia-badge-omissao { background: var(--coral); }
+.ia-badge-representacao { background: var(--sky); }
 .ia-links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .9rem; color: var(--ink-soft); }
 .ia-links a { color: var(--green); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .ia-links a:hover { color: var(--coral-d); }

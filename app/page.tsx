@@ -19,10 +19,10 @@ const LINK_EBOOK = "https://online.fliphtml5.com/jkeol/tbmd/";
 
 // Item 2 (mídia alternativa): ajuste título, descrição e link quando estiver pronta.
 const ITEM2 = {
-  titulo: "Mídia complementar",
+  titulo: "Jogo: Caça ao Viés",
   descricao:
-    "Descreva aqui em uma ou duas frases o que é a mídia e o que a pessoa vai fazer nela.",
-  link: "",
+    "Você é professor(a) e precisa revisar os materiais da semana gerados por IA. Em 5 fases baseadas nas conversas reais com ChatGPT, Gemini e DeepSeek, clique nos trechos com viés, descubra o tipo de cada um e veja como o material poderia ser reescrito.",
+  link: "/jogo",
   incorporar: false, // true para mostrar dentro da página (iframe), se a ferramenta permitir
 };
 
@@ -33,7 +33,7 @@ const navegacao = [
   { id: "video", rotulo: "Vídeo" },
   { id: "pratica", rotulo: "Prática" },
   { id: "ebook", rotulo: "eBook" },
-  { id: "item2", rotulo: "Mídia extra" },
+  { id: "item2", rotulo: "Jogo" },
   { id: "avaliacao", rotulo: "Avaliação" },
   { id: "materiais", rotulo: "Materiais" },
   { id: "referencias", rotulo: "Referências" },
@@ -44,7 +44,7 @@ const passos = [
   { titulo: "Assista ao vídeo", detalhe: "Cerca de 30 min", href: "#video" },
   { titulo: "Teste você mesmo", detalhe: "Cerca de 10 min", href: "#pratica" },
   { titulo: "Leia o eBook", detalhe: "Cerca de 20 min", href: "#ebook" },
-  { titulo: "Explore a mídia extra", detalhe: "Cerca de 10 min", href: "#item2" },
+  { titulo: "Jogue Caça ao Viés", detalhe: "Cerca de 10 min", href: "#item2" },
   { titulo: "Faça a avaliação", detalhe: "Cerca de 10 min", href: "#avaliacao" },
 ];
 
@@ -439,7 +439,7 @@ export default function Home() {
               <p className="ia-mono">Resumo</p>
               <dl>
                 {[
-                  ["Formato", "Vídeo, prática, eBook, mídia extra e avaliação"],
+                  ["Formato", "Vídeo, prática, eBook, jogo e avaliação"],
                   ["Duração", "Cerca de 1h20"],
                   ["Ritmo", "No seu tempo, assíncrono"],
                   ["Nível", "Introdutório"],
@@ -595,7 +595,7 @@ export default function Home() {
               )}
               <span className="ia-small">Leitura de cerca de 20 minutos · publicado no FlipHTML5.</span>
             </div>
-            <Proximo href="#item2" rotulo="Próximo: mídia extra" />
+            <Proximo href="#item2" rotulo="Próximo: jogar Caça ao Viés" />
           </Secao>
 
           {/* ITEM 2 — MÍDIA ALTERNATIVA */}
@@ -614,11 +614,9 @@ export default function Home() {
               {ITEM2.link ? (
                 <a
                   href={ITEM2.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="ia-btn"
                 >
-                  Abrir {ITEM2.titulo.toLowerCase()} ↗
+                  Jogar agora →
                 </a>
               ) : (
                 <p className="ia-note">Esta mídia será publicada aqui em breve.</p>
@@ -796,12 +794,12 @@ html, body { background: #0E2B27 !important; }
 
 /* menu */
 .ia-nav { position: sticky; top: 0; z-index: 50; background: rgba(10, 33, 30, .88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-.ia-nav-in { display: flex; align-items: center; gap: 28px; height: 64px; }
+.ia-nav-in { display: flex; align-items: center; gap: 20px; height: 64px; max-width: 1240px; }
 .ia-brand { display: flex; align-items: center; gap: 10px; font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.1rem; white-space: nowrap; }
 .ia-dot { width: 12px; height: 12px; border-radius: 3px; background: var(--yellow); transform: rotate(12deg); }
-.ia-nav-links { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; font-size: .92rem; font-weight: 600; color: var(--chalk-soft); }
+.ia-nav-links { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; font-size: .86rem; font-weight: 600; color: var(--chalk-soft); min-width: 0; }
 .ia-nav-links::-webkit-scrollbar { display: none; }
-.ia-nav-links a { display: inline-block; padding: 8px 14px; border-radius: 999px; white-space: nowrap; transition: .2s; }
+.ia-nav-links a { display: inline-block; padding: 7px 10px; border-radius: 999px; white-space: nowrap; transition: .2s; }
 .ia-nav-links a:hover { color: var(--chalk); background: rgba(255, 255, 255, .08); }
 .ia-nav-links a.active { color: var(--ink); background: var(--yellow); }
 

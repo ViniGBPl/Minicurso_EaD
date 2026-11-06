@@ -12,12 +12,28 @@ import { useEffect, useState } from "react";
 // Link direto para o PDF do minicurso no Dropbox
 const LINK_DROPBOX = "https://www.dropbox.com/scl/fi/3qbmgt9125wwho4n994od/Minicurso_Slides_com_teoria.pdf?rlkey=fx3etzbboh2azzinnok0ycnuq&st=h190c0pp&dl=0";
 
+// ===== 2ª VA =====
+// Cole aqui o link de visualização do eBook publicado no FlipHTML5
+// (ex.: "https://view.genially.com/xxxxxxxx/..."). Ele aparece incorporado na página.
+const LINK_EBOOK = "https://online.fliphtml5.com/jkeol/tbmd/";
+
+// Item 2 (mídia alternativa): ajuste título, descrição e link quando estiver pronta.
+const ITEM2 = {
+  titulo: "Mídia complementar",
+  descricao:
+    "Descreva aqui em uma ou duas frases o que é a mídia e o que a pessoa vai fazer nela.",
+  link: "",
+  incorporar: false, // true para mostrar dentro da página (iframe), se a ferramenta permitir
+};
+
 const navegacao = [
   { id: "como-estudar", rotulo: "Como estudar" },
   { id: "objetivos", rotulo: "Objetivos" },
   { id: "conceitos", rotulo: "Conceitos" },
   { id: "video", rotulo: "Vídeo" },
   { id: "pratica", rotulo: "Prática" },
+  { id: "ebook", rotulo: "eBook" },
+  { id: "item2", rotulo: "Mídia extra" },
   { id: "avaliacao", rotulo: "Avaliação" },
   { id: "materiais", rotulo: "Materiais" },
   { id: "referencias", rotulo: "Referências" },
@@ -27,6 +43,8 @@ const passos = [
   { titulo: "Leia os objetivos", detalhe: "Cerca de 2 min", href: "#objetivos" },
   { titulo: "Assista ao vídeo", detalhe: "Cerca de 30 min", href: "#video" },
   { titulo: "Teste você mesmo", detalhe: "Cerca de 10 min", href: "#pratica" },
+  { titulo: "Leia o eBook", detalhe: "Cerca de 20 min", href: "#ebook" },
+  { titulo: "Explore a mídia extra", detalhe: "Cerca de 10 min", href: "#item2" },
   { titulo: "Faça a avaliação", detalhe: "Cerca de 10 min", href: "#avaliacao" },
 ];
 
@@ -122,65 +140,32 @@ const materiais = [
   {
     titulo: "Slides do minicurso",
     descricao: "Os slides usados no vídeo, para revisar no seu ritmo.",
-    tipo: "PDF",
+    tipo: "PDF · Dropbox",
+    href: LINK_DROPBOX,
+    externo: true,
   },
   {
     titulo: "Checklist de revisão",
-    descricao: "A checklist em versão para imprimir e usar com seus materiais.",
-    tipo: "PDF",
+    descricao: "A checklist interativa com os 4 critérios, na seção de prática.",
+    tipo: "Interativo",
+    href: "#pratica",
+    externo: false,
   },
   {
     titulo: "Prompts para testar",
-    descricao: "Os prompts da atividade prática, prontos para copiar.",
-    tipo: "PDF",
+    descricao: "Os 5 prompts da atividade prática, com botão para copiar.",
+    tipo: "Interativo",
+    href: "#pratica",
+    externo: false,
   },
 ];
 
-// Links das conversas compartilhadas por IA.
-// Como cada IA foi compartilhada como um notebook completo, todas as entradas apontam
-// para o mesmo material de referência, mantendo a estrutura dos prompts da atividade.
+// Conversas compartilhadas: cada link é UMA conversa com os 5 prompts da prática.
 const conversas = [
-  {
-    titulo: "Cientistas famosos",
-    links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
-      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
-      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
-    },
-  },
-  {
-    titulo: "História da computação",
-    links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
-      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
-      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
-    },
-  },
-  {
-    titulo: "Profissional de sucesso",
-    links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
-      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
-      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
-    },
-  },
-  {
-    titulo: "Problema de matemática",
-    links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
-      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
-      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
-    },
-  },
-  {
-    titulo: "Povos indígenas do Brasil",
-    links: {
-      ChatGPT: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1",
-      Gemini: "https://share.gemini.google/2S1xvY6lybvI",
-      DeepSeek: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi",
-    },
-  },
-] as { titulo: string; links: Record<string, string> }[];
+  { nome: "ChatGPT", url: "https://chatgpt.com/share/6ac3f1c3-9810-83e8-9af5-c85d1f602ad1" },
+  { nome: "Gemini", url: "https://share.gemini.google/2S1xvY6lybvI" },
+  { nome: "DeepSeek", url: "https://chat.deepseek.com/share/nuot6u2s3y77gd3wbi" },
+];
 
 /* ---------------------------- COMPONENTES ---------------------------- */
 
@@ -454,8 +439,8 @@ export default function Home() {
               <p className="ia-mono">Resumo</p>
               <dl>
                 {[
-                  
-                  ["Formato", "Vídeo + prática + avaliação"],
+                  ["Formato", "Vídeo, prática, eBook, mídia extra e avaliação"],
+                  ["Duração", "Cerca de 1h20"],
                   ["Ritmo", "No seu tempo, assíncrono"],
                   ["Nível", "Introdutório"],
                 ].map(([k, v]) => (
@@ -475,7 +460,7 @@ export default function Home() {
             id="como-estudar"
             numero="01"
             titulo="Como estudar"
-            intro="O minicurso tem quatro etapas curtas. Siga a ordem abaixo ou clique em qualquer passo para ir direto a ele."
+            intro="O minicurso tem seis etapas curtas. Siga a ordem abaixo ou clique em qualquer passo para ir direto a ele."
           >
             <ol className="ia-grid-2 ia-steps">
               {passos.map((p, i) => (
@@ -575,11 +560,75 @@ export default function Home() {
             <div className="ia-mt">
               <Checklist />
             </div>
+            <Proximo href="#ebook" rotulo="Próximo: ler o eBook" />
+          </Secao>
+
+          {/* AVALIAÇÃO */}
+          <Secao
+            id="ebook"
+            numero="06"
+            titulo="eBook: De olho no viés"
+            intro="Um guia para ler depois do vídeo e da prática: casos reais comentados das três IAs, a checklist passo a passo e os limites da análise."
+          >
+            {LINK_EBOOK ? (
+              <div className="ia-video ia-ebook">
+                <iframe
+                  src={LINK_EBOOK}
+                  title="eBook De olho no viés"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+            ) : (
+              <p className="ia-note">O eBook será publicado aqui em breve.</p>
+            )}
+            <div className="ia-row ia-mt">
+              {LINK_EBOOK && (
+                <a
+                  href={LINK_EBOOK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ia-btn"
+                >
+                  Abrir o eBook em tela cheia ↗
+                </a>
+              )}
+              <span className="ia-small">Leitura de cerca de 20 minutos · publicado no FlipHTML5.</span>
+            </div>
+            <Proximo href="#item2" rotulo="Próximo: mídia extra" />
+          </Secao>
+
+          {/* ITEM 2 — MÍDIA ALTERNATIVA */}
+          <Secao
+            id="item2"
+            numero="07"
+            titulo={ITEM2.titulo}
+            intro={ITEM2.descricao}
+          >
+            {ITEM2.link && ITEM2.incorporar && (
+              <div className="ia-video">
+                <iframe src={ITEM2.link} title={ITEM2.titulo} allowFullScreen loading="lazy" />
+              </div>
+            )}
+            <div className="ia-row ia-mt">
+              {ITEM2.link ? (
+                <a
+                  href={ITEM2.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ia-btn"
+                >
+                  Abrir {ITEM2.titulo.toLowerCase()} ↗
+                </a>
+              ) : (
+                <p className="ia-note">Esta mídia será publicada aqui em breve.</p>
+              )}
+            </div>
             <Proximo href="#avaliacao" rotulo="Próximo: avaliação" />
           </Secao>
 
           {/* AVALIAÇÃO */}
-          <Secao id="avaliacao" numero="06" titulo="Avaliação interativa">
+          <Secao id="avaliacao" numero="08" titulo="Avaliação interativa">
             <div className="ia-card ia-eval">
               <div>
                 <h3 className="ia-h3">Teste o que você aprendeu</h3>
@@ -602,61 +651,52 @@ export default function Home() {
           {/* MATERIAIS */}
           <Secao
             id="materiais"
-            numero="07"
-            titulo="Materiais para baixar"
-            intro="Além de baixar os PDFs e materiais de apoio no Dropbox, você pode abrir as conversas com cada IA usadas como exemplos no minicurso e compará-las usando a checklist."
+            numero="09"
+            titulo="Materiais de apoio"
+            intro="Os slides do vídeo, a checklist e os prompts, além das conversas com cada IA usadas como exemplo no minicurso."
           >
             <ul className="ia-grid-3">
               {materiais.map((m) => (
-                <li key={m.titulo} className="ia-card">
-                  <span className="ia-chip">{m.tipo}</span>
-                  <h3 className="ia-h3">{m.titulo}</h3>
-                  <p className="ia-small">{m.descricao}</p>
+                <li key={m.titulo}>
+                  <a
+                    href={m.href}
+                    className="ia-card ia-card-link"
+                    {...(m.externo
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    <span className="ia-chip">{m.tipo}</span>
+                    <h3 className="ia-h3">{m.titulo}</h3>
+                    <p className="ia-small">{m.descricao}</p>
+                  </a>
                 </li>
               ))}
             </ul>
-            <div className="ia-row ia-mt">
-              <a
-                href={LINK_DROPBOX}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ia-btn"
-              >
-                Abrir pasta no Dropbox ↗
-              </a>
-              <span className="ia-small">Abre em uma nova aba.</span>
-            </div>
-
             <h3 className="ia-h3 ia-mt-lg">Conversas de exemplo</h3>
             <p className="ia-small ia-mt-sm">
-              Os mesmos prompts da atividade prática, testados em três IAs.
-              As respostas foram geradas em um momento específico e podem mudar
-              ao testar de novo.
+              Cada link abre uma conversa com os 5 prompts da atividade prática,
+              testados em outubro de 2026. As respostas podem mudar ao testar de
+              novo. Os casos comentados no eBook vêm dessas conversas.
             </p>
-            <ul className="ia-grid-2 ia-mt">
-              {conversas.map((c, i) => (
-                <li key={c.titulo} className="ia-card">
-                  <span className="ia-chip">Prompt {i + 1}</span>
-                  <h3 className="ia-h3">{c.titulo}</h3>
-                  <div className="ia-links ia-links-conv">
-                    {ias.map((ia) => (
-                      <a
-                        key={ia.nome}
-                        href={c.links[ia.nome] ?? "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {ia.nome} ↗
-                      </a>
-                    ))}
-                  </div>
-                </li>
+            <div className="ia-card ia-mt">
+            <div className="ia-links ia-links-conv">
+              <span>Abrir conversa:</span>
+              {conversas.map((c) => (
+                <a
+                  key={c.nome}
+                  href={c.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {c.nome} ↗
+                </a>
               ))}
-            </ul>
+            </div>
+            </div>
           </Secao>
 
           {/* REFERÊNCIAS */}
-          <Secao id="referencias" numero="08" titulo="Referências">
+          <Secao id="referencias" numero="10" titulo="Referências">
             <ul className="ia-refs">
               <li>
                 UNESCO. <em>Recommendation on the Ethics of Artificial
@@ -667,12 +707,16 @@ export default function Home() {
                 2021.
               </li>
               <li>
-                Bender, E. M. et al. “On the Dangers of Stochastic Parrots: Can
-                Language Models Be Too Big?” — <em>FAccT</em>, 2021.
+                BENDER, E. M.; GEBRU, T.; McMILLAN-MAJOR, A.; SHMITCHELL, S. On
+                the dangers of stochastic parrots: can language models be too
+                big? In: <em>Proceedings of the 2021 ACM Conference on Fairness,
+                Accountability, and Transparency (FAccT ’21)</em>. New York:
+                ACM, 2021. p. 610–623.
               </li>
-              <li className="ia-todo">
-                Adicione aqui as referências específicas usadas na sua análise
-                e nos exemplos do vídeo.
+              <li>
+                Conversas com ChatGPT (OpenAI), Gemini (Google) e DeepSeek usando
+                os 5 prompts da atividade prática, realizadas em outubro de 2026
+                (links na seção Materiais de apoio).
               </li>
             </ul>
           </Secao>
@@ -871,7 +915,8 @@ html, body { background: #0E2B27 !important; }
 /* referências / rodapé / próximo */
 .ia-refs { display: flex; flex-direction: column; gap: 16px; color: var(--chalk-soft); font-size: .98rem; }
 .ia-refs li { padding-left: 18px; border-left: 3px solid var(--line); }
-.ia-refs li.ia-todo { border-left-color: var(--yellow); color: var(--chalk); font-style: italic; }
+.ia-card-link { display: block; height: 100%; text-decoration: none; color: inherit; }
+.ia-video.ia-ebook { padding-top: 75%; }
 .ia-next { display: flex; justify-content: flex-end; margin-top: 44px; }
 .ia-next a { font-size: .95rem; font-weight: 700; color: var(--chalk-soft); transition: .2s; }
 .ia-next a:hover { color: var(--yellow); }
